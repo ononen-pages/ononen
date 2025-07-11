@@ -63,6 +63,82 @@
             color: #0f172a;
         }
         
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #0f172a;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s;
+            z-index: 1001;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .close-menu {
+            font-size: 30px;
+            cursor: pointer;
+            color: #64748b;
+        }
+        
+        .mobile-menu nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 20px;
+        }
+        
+        .mobile-menu nav a {
+            padding: 15px 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 18px;
+        }
+        
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .menu-overlay.active {
+            display: block;
+        }
+        
         /* Hero Section */
         .hero {
             background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);
@@ -377,8 +453,25 @@
         
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .header-content {
+                justify-content: center;
+                position: relative;
+            }
+            
+            .logo {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
             nav {
                 display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+                position: absolute;
+                right: 20px;
             }
             
             h1 {
@@ -416,16 +509,35 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <img src="ononen-logo.png" alt="Ononen" style="height: 70px; width: auto;">
+                    <img src="ononen-logo.png" alt="Ononen" style="height: 80px; width: auto;">
                 </div>
                 <nav>
                     <a href="#about">About</a>
                     <a href="#brands">Our Brands</a>
                     <a href="#contact">Contact</a>
                 </nav>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Menu -->
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <div style="font-weight: bold; font-size: 24px;">Menu</div>
+            <span class="close-menu" onclick="toggleMenu()">&times;</span>
+        </div>
+        <nav>
+            <a href="#about" onclick="toggleMenu()">About</a>
+            <a href="#brands" onclick="toggleMenu()">Our Brands</a>
+            <a href="#contact" onclick="toggleMenu()">Contact</a>
+        </nav>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -556,7 +668,7 @@
             <div class="footer-content">
                 <div class="footer-left">
                     <div class="footer-logo">
-                        <img src="ononen-logo.png" alt="Ononen" style="height: 65px; width: auto; filter: brightness(0) invert(1);">
+                        <img src="ononen-logo.png" alt="Ononen" style="height: 75px; width: auto; filter: brightness(0) invert(1);">
                     </div>
                     <p class="footer-tagline">Building and Growing Brands That Make Life Easier</p>
                 </div>
@@ -583,6 +695,23 @@
                 }
             });
         });
+        
+        // Mobile menu toggle
+        function toggleMenu() {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const menuOverlay = document.querySelector('.menu-overlay');
+            const hamburger = document.querySelector('.hamburger');
+            
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
     </script>
 </body>
 </html>
