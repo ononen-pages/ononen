@@ -453,13 +453,14 @@
         /* Mobile Responsive */
         @media (max-width: 768px) {
             header {
-                padding: 15px 0;
+                padding: 30px 0 20px 0;
             }
             
             .header-content {
                 justify-content: center;
                 position: relative;
-                padding: 10px 0;
+                padding: 15px 0;
+                min-height: 50px;
             }
             
             .logo {
@@ -482,10 +483,6 @@
                 right: 20px;
                 top: 50%;
                 transform: translateY(-50%);
-            }
-            
-            .mobile-menu {
-                display: block !important;
             }
             
             h1 {
@@ -514,6 +511,10 @@
                 text-align: center;
                 gap: 24px;
             }
+            
+            .hero {
+                padding-top: 140px;
+            }
         }
     </style>
 </head>
@@ -541,7 +542,7 @@
 
     <!-- Mobile Menu -->
     <div class="menu-overlay" onclick="toggleMenu()"></div>
-    <div class="mobile-menu">
+    <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
             <div style="font-weight: bold; font-size: 24px;">Menu</div>
             <span class="close-menu" onclick="toggleMenu()">&times;</span>
@@ -712,9 +713,10 @@
         
         // Mobile menu toggle
         function toggleMenu() {
-            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenu = document.getElementById('mobileMenu');
             const menuOverlay = document.querySelector('.menu-overlay');
-            const hamburger = document.querySelector('.hamburger');
+            
+            if (!mobileMenu || !menuOverlay) return;
             
             mobileMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
